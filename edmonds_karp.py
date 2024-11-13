@@ -1,18 +1,17 @@
 # mypy, pytest
 
 def bfs_flow(n, adj_matrix, cap_matrix) -> tuple[int, list[int]]:
-    s: int = 0 # Sources
+    s: int = 0 # Source
     t: int = n - 1 # Sink
     queue: list[tuple[int, float]] = [] # [(index, flow)]
     queue.append( (s, float('inf')) )
 
-    parent: list[int] = [-1 for i in range(n)]
+    parent: list[int] = [-1 for _ in range(n)]
     parent[0] = -2
 
     while (len(queue) != 0):
         current, flow = queue.pop(0)
 
-        # Esto siempre hace el camino más corto al ser BFS
         next_nodes = [ i for i in range(n) if adj_matrix[current][i] == 0]
         for node in next_nodes:
             if parent[node] == -1 and cap_matrix[current][node] != 0:
@@ -85,7 +84,7 @@ def grafo1():
     return adj_matrix, cap_matrix
 
 """
-Este grafo es el ejemplo del sitio: https://cp-algorithms.com/graph/edmonds_karp.html
+Este grafo es el ejemplo del sitio: https://www.w3schools.com/dsa/dsa_algo_graphs_edmondskarp.php
 """
 def grafo2():
     adj_matrix = [ [float('inf')]*n for _ in range(n) ] 
