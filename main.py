@@ -1,10 +1,11 @@
-from edmonds_karp import edmonds_karp
+from edmonds_karp import edmonds_karp, grafo1
 from prim import prim_mst
 from tsp import tsp_ant_colony_optimization
 
 from typing import List, Tuple
 
 import numpy as np
+import sys
 
 def readFile(filename: str = "input.txt") -> Tuple[int, List[List[int]], List[List[int]]]:
     n: int = 0
@@ -41,14 +42,6 @@ if __name__ == "__main__":
     n, adj_matrix, cap_matrix = readFile(filename="input.txt")
     adj_matrix_np = np.asmatrix(adj_matrix)
 
-    print(n)
-    print()
-    print(adj_matrix)
-    print()
-    print(cap_matrix)
-
-    print("=====================")
-    
     print(prim_mst(n, adj_matrix))
     print()
     print(tsp_ant_colony_optimization(adj_matrix_np))

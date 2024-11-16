@@ -66,4 +66,6 @@ def tsp_ant_colony_optimization(
                 j = (i + 1) % n
                 pheromone[route[i], route[j]] += 1 / route_length
 
-    return [(chr(65 + shortest_route[i]), chr(65 + shortest_route[(i + 1) % n])) for i in range(n)]
+    if len(shortest_route) == 0:
+        return [] 
+    return [(shortest_route[i], shortest_route[(i + 1) % n]) for i in range(n)]

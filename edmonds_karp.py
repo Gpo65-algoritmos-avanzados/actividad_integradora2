@@ -1,6 +1,7 @@
 from typing import List, Tuple
+import sys
 
-def bfs_flow(n: int, adj_matrix: List[List[float]], cap_matrix: List[List[int]]) -> Tuple[int, List[int]]:
+def bfs_flow(n: int, adj_matrix: List[List[int]], cap_matrix: List[List[int]]) -> Tuple[int, List[int]]:
     """
     Implements the bfs algorithm to use for the Edmonds-Karp algorithm, it traverses the graph from the node 0 until the
     last node of the graph is reached, each iteration storing the max amount flow that each node can flow until the last node is found.
@@ -20,8 +21,8 @@ def bfs_flow(n: int, adj_matrix: List[List[float]], cap_matrix: List[List[int]])
     """
     s: int = 0 # Source index
     t: int = n - 1 # Sink index
-    queue: list[tuple[int, float]] = []
-    queue.append( (s, float('inf')) )
+    queue: list[tuple[int, int]] = []
+    queue.append( (s, sys.maxsize) )
 
     parent: list[int] = [-1 for _ in range(n)]
     parent[0] = -2
@@ -33,14 +34,15 @@ def bfs_flow(n: int, adj_matrix: List[List[float]], cap_matrix: List[List[int]])
         for node in next_nodes:
             if parent[node] == -1 and cap_matrix[current][node] != 0:
                 parent[node] = current
-                new_flow = min(int(flow), cap_matrix[current][node])
+                new_flow = min(flow, cap_matrix[current][node])
+                new_flow = int(new_flow)
                 if node == t:
                     return new_flow, parent
                 queue.append( (node, new_flow) )
     return 0, parent
 
 
-def edmonds_karp(n: int, adj_matrix: List[List[float]], cap_matrix: List[List[int]]) -> int:
+def edmonds_karp(n: int, adj_matrix: List[List[int]], cap_matrix: List[List[int]]) -> int:
     """
     Implements the Edmonds-Karp algorithm to find the maximum flow in a graph. 
     The algorithm assumes that the source is located at the index 0 and the sink is located at the index n-1.
@@ -78,9 +80,11 @@ def edmonds_karp(n: int, adj_matrix: List[List[float]], cap_matrix: List[List[in
 """
 Este grafo es el ejemplo del sitio: https://cp-algorithms.com/graph/edmonds_karp.html
 """
+import sys
 def grafo1():
-    adj_matrix = [ [float('inf')]*n for _ in range(n) ] 
-    cap_matrix = [ [float('inf')]*n for _ in range(n) ]
+    n = 6
+    adj_matrix = [ [sys.maxsize]*n for _ in range(n) ] 
+    cap_matrix = [ [sys.maxsize]*n for _ in range(n) ]
 
     adj_matrix[0][1] = 0
     adj_matrix[0][4] = 0
