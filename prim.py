@@ -5,13 +5,13 @@ def prim_mst(n: int, distance_matrix: list[list[int]]) -> list[tuple[int, int]]:
     Computes the Minimum Spanning Tree (MST) of a graph using Prim's algorithm.
 
     Parameters:
-    n (int): The number of vertices in the graph.
-    distance_matrix (list[list[int]]): A 2D list representing the adjacency matrix of the graph,
+      n (int): The number of vertices in the graph.
+      distance_matrix (list[list[int]]): A 2D list representing the adjacency matrix of the graph,
                                        where distance_matrix[i][j] is the weight of the edge
                                        between vertices i and j.
 
     Returns:
-    list[tuple[int, int]]: A list of tuples representing the edges in the MST. Each tuple
+      path (list[tuple[int, int]]): A list of tuples representing the edges in the MST. Each tuple
                            contains two integers, representing the vertices connected by the edge.
     """
     mst = []

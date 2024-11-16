@@ -11,29 +11,30 @@ def tsp_ant_colony_optimization(
 ) -> List[Tuple[str, str]]:
     """
     Solves the Traveling Salesman Problem using Ant Colony Optimization.
+    Returns an empty array in the case no possible shortest route is found.
 
     Parameters:
-    - distance_matrix (np.ndarray): A 2D numpy array representing the distances between each pair of nodes.
-    - n_ants (int): The number of ants to simulate in each iteration.
-    - n_iterations (int): The number of iterations to perform.
-    - decay (float): The rate at which pheromone decays.
-    - alpha (float): The influence of pheromone on direction choice.
-    - beta (float): The influence of distance on direction choice.
+      distance_matrix (np.ndarray): A 2D numpy array representing the distances between each pair of nodes.
+      n_ants (int): The number of ants to simulate in each iteration.
+      n_iterations (int): The number of iterations to perform.
+      decay (float): The rate at which pheromone decays.
+      alpha (float): The influence of pheromone on direction choice.
+      beta (float): The influence of distance on direction choice.
 
     Returns:
-    - List[Tuple[str, str]]: A list of tuples representing the shortest route found, with nodes labeled as letters.
+      path (List[Tuple[str, str]]): A list of tuples representing the shortest route found, with nodes labeled as letters.
     """
     n = distance_matrix.shape[0]
     pheromone = np.ones((n, n))
-    shortest_route = None
+    shortest_route: list[int] = []
     shortest_route_length = float("inf")
 
     def compute_route_length(route: List[int]) -> float:
         """Computes the total length of a given route."""
         return sum(distance_matrix[route[i], route[i+1]] for i in range(len(route) - 1)) + distance_matrix[route[-1], route[0]]
 
-    for iteration in range(n_iterations):
-        all_routes = []
+    for _ in range(n_iterations):
+        all_routes: list[list[int]] = []
         for _ in range(n_ants):
             route = [0]
             visited = set(route)

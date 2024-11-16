@@ -1,9 +1,26 @@
-# mypy, pytest
+from typing import List, Tuple
 
-def bfs_flow(n, adj_matrix, cap_matrix) -> tuple[int, list[int]]:
-    s: int = 0 # Source
-    t: int = n - 1 # Sink
-    queue: list[tuple[int, float]] = [] # [(index, flow)]
+def bfs_flow(n: int, adj_matrix: List[List[float]], cap_matrix: List[List[int]]) -> Tuple[int, List[int]]:
+    """
+    Implements the bfs algorithm to use for the Edmonds-Karp algorithm, it traverses the graph from the node 0 until the
+    last node of the graph is reached, each iteration storing the max amount flow that each node can flow until the last node is found.
+    If the last node can't be reached then the algorithm returns 0 as the found flow.
+
+    Parameters:
+    - n (int): The number of nodes in the graph.
+    - adj_matrix (List[List[float]]): A 2D list representing the adjacency matrix of the graph,
+                                       where adj_matrix[i][j] is the weight of the edge
+                                       between vertices i and j.
+    - cap_matrix (List[List[int]]): A 2D list representing the capacity matrix of the graph,
+                                       where cap_matrix[i][j] is the flow capacity of the edge
+                                       between vertices i and j.
+
+    Returns:
+    - Tuple[int, List[int]]: Returns an integer that represent the flow .
+    """
+    s: int = 0 # Source index
+    t: int = n - 1 # Sink index
+    queue: list[tuple[int, float]] = []
     queue.append( (s, float('inf')) )
 
     parent: list[int] = [-1 for _ in range(n)]
@@ -16,14 +33,30 @@ def bfs_flow(n, adj_matrix, cap_matrix) -> tuple[int, list[int]]:
         for node in next_nodes:
             if parent[node] == -1 and cap_matrix[current][node] != 0:
                 parent[node] = current
-                new_flow = min(flow, cap_matrix[current][node])
+                new_flow = min(int(flow), cap_matrix[current][node])
                 if node == t:
                     return new_flow, parent
                 queue.append( (node, new_flow) )
     return 0, parent
 
 
-def edmonds_karp(n, adj_matrix, cap_matrix) -> int:
+def edmonds_karp(n: int, adj_matrix: List[List[float]], cap_matrix: List[List[int]]) -> int:
+    """
+    Implements the Edmonds-Karp algorithm to find the maximum flow in a graph. 
+    The algorithm assumes that the source is located at the index 0 and the sink is located at the index n-1.
+
+    Parameters:
+      n (int): The number of nodes in the graph.
+      adj_matrix (List[List[float]]): A 2D list representing the adjacency matrix of the graph,
+                                       where adj_matrix[i][j] is the weight of the edge
+                                       between vertices i and j.
+      cap_matrix (List[List[int]]): A 2D list representing the capacity matrix of the graph,
+                                       where cap_matrix[i][j] is the flow capacity of the edge
+                                       between vertices i and j.
+
+    Returns:
+      flow (int): An integer that represents the maximum flow possible between the first node (index 0) and the last node (index n - 1) of the given graph.
+    """
     max_flow: int = 0
     s: int = 0
     t: int = n - 1
