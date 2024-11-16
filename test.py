@@ -4,6 +4,15 @@ import numpy as np
 
 import sys
 
+"""
+E2. Actividad Integradora 2 
+
+Ángel Orlando Vázquez Morales A01659000
+Sergio Morales González A01657493
+Miguel Ángel Ogando Bautista A01663053
+
+"""
+
 def test_prim():
     n1 = 2
     matrix1 = [[0, 10], 

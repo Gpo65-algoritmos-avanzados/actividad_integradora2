@@ -2,6 +2,14 @@ from typing import List, Tuple
 import numpy as np
 import sys
 
+"""
+E2. Actividad Integradora 2 
+
+Ángel Orlando Vázquez Morales A01659000
+Sergio Morales González A01657493
+Miguel Ángel Ogando Bautista A01663053
+
+"""
 
 def prim_mst(n: int, distance_matrix: list[list[int]]) -> list[tuple[int, int]]:
     """
@@ -144,8 +152,6 @@ def bfs_flow(n: int, adj_matrix: List[List[int]], cap_matrix: List[List[int]]) -
                 parent[node] = current
                 new_flow = min(flow, cap_matrix[current][node])
                 if node == t:
-                    print(new_flow)
-                    print(parent)
                     return new_flow, parent
                 queue.append( (node, new_flow) )
     return 0, parent
