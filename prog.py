@@ -143,9 +143,9 @@ def bfs_flow(n: int, adj_matrix: List[List[int]], cap_matrix: List[List[int]]) -
             if parent[node] == -1 and cap_matrix[current][node] != 0:
                 parent[node] = current
                 new_flow = min(flow, cap_matrix[current][node])
-                # print(new_flow)
                 if node == t:
-                    # print(parent)
+                    print(new_flow)
+                    print(parent)
                     return new_flow, parent
                 queue.append( (node, new_flow) )
     return 0, parent
