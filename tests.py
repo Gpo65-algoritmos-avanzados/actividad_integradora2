@@ -72,6 +72,7 @@ def test_edmonds_karp():
     results1 = edmonds_karp(n1, adj_matrix1, cap_matrix1)
     assert results1 == 10
 
+    # Ejemplo 2: 
     n2 = 6
 
     adj_matrix2 = [ [sys.maxsize]*n2 for _ in range(n2) ] 
