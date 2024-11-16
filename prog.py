@@ -8,13 +8,13 @@ def prim_mst(n: int, distance_matrix: list[list[int]]) -> list[tuple[int, int]]:
     Computes the Minimum Spanning Tree (MST) of a graph using Prim's algorithm.
 
     Parameters:
-      n (int): The number of vertices in the graph.
-      distance_matrix (list[list[int]]): A 2D list representing the adjacency matrix of the graph,
+    n (int): The number of vertices in the graph.
+    distance_matrix (list[list[int]]): A 2D list representing the adjacency matrix of the graph,
                                        where distance_matrix[i][j] is the weight of the edge
                                        between vertices i and j.
 
     Returns:
-      path (list[tuple[int, int]]): A list of tuples representing the edges in the MST. Each tuple
+    list[tuple[int, int]]: A list of tuples representing the edges in the MST. Each tuple
                            contains two integers, representing the vertices connected by the edge.
     """
     mst = []
@@ -32,10 +32,10 @@ def prim_mst(n: int, distance_matrix: list[list[int]]) -> list[tuple[int, int]]:
         visited[u] = True
         if parent[u] != -1:
             mst.append((parent[u], u))
-            for v in range(n):
-                if not visited[v] and distance_matrix[u][v] < dis_min[v]:
-                    dis_min[v] = distance_matrix[u][v]
-                    parent[v] = u
+        for v in range(n):
+            if not visited[v] and 0 < distance_matrix[u][v] < dis_min[v]:
+                dis_min[v] = distance_matrix[u][v]
+                parent[v] = u
     return mst
 
 
@@ -143,7 +143,9 @@ def bfs_flow(n: int, adj_matrix: List[List[int]], cap_matrix: List[List[int]]) -
             if parent[node] == -1 and cap_matrix[current][node] != 0:
                 parent[node] = current
                 new_flow = min(flow, cap_matrix[current][node])
+                # print(new_flow)
                 if node == t:
+                    # print(parent)
                     return new_flow, parent
                 queue.append( (node, new_flow) )
     return 0, parent
@@ -230,8 +232,19 @@ if __name__ == "__main__":
     n, adj_matrix, cap_matrix = readFile(filename="input.txt")
     adj_matrix_np = np.asmatrix(adj_matrix)
 
-    print(prim_mst(n, adj_matrix))
+    #prim = prim_mst(n, adj_matrix)
+    #output = ", ".join(prim)
+    #print(output)
+    prim_result = prim_mst(n, adj_matrix)
+    prim_strings: List[str] = list(map(lambda x: str(x), prim_result))
+
+    print(", ".join([ str(pair) for pair in prim_strings ]))
     print()
-    print(tsp_ant_colony_optimization(adj_matrix_np))
+
+    tsp_result = tsp_ant_colony_optimization(adj_matrix_np)
+    tsp_strings: List[str] = list(map(lambda x: str(x), tsp_result))
+
+    print(", ".join([ str(pair) for pair in tsp_strings ]))
     print()
+
     print(edmonds_karp(n, adj_matrix, cap_matrix))
