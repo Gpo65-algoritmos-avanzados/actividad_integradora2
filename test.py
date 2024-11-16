@@ -28,11 +28,6 @@ def test_prim():
                        (0, 4)]
 
 
-def test_tsp():
-    three = 3
-    assert three == 3
-
-
 def test_edmonds_karp():
     # Ejemplo 1: https://cp-algorithms.com/graph/edmonds_karp.html
     n1 = 6
