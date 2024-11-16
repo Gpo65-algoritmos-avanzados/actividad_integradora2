@@ -1,5 +1,7 @@
 import pytest
 from prog import edmonds_karp, tsp_ant_colony_optimization, prim_mst
+import numpy as np
+
 import sys
 
 def test_prim():
@@ -116,3 +118,44 @@ def test_edmonds_karp():
 
     results2 = edmonds_karp(n2, adj_matrix2, cap_matrix2)
     assert results2 == 8
+
+    
+def test_tsp():
+    # Example 1: Simple 4-node graph
+    n1 = 4
+    distance_matrix1 = [
+        [0, 10, 15, 20],
+        [10, 0, 35, 25],
+        [15, 35, 0, 30],
+        [20, 25, 30, 0]
+    ]
+
+    # Expected approximate solution: a valid TSP cycle (e.g., 0 -> 1 -> 3 -> 2 -> 0)
+    tsp_route1 = tsp_ant_colony_optimization(np.array(distance_matrix1), n_ants=10, n_iterations=100)
+
+    # Check if the result is a valid cycle
+    tsp_nodes1 = set(edge[0] for edge in tsp_route1) | set(edge[1] for edge in tsp_route1)
+    assert tsp_nodes1 == {0, 1, 2, 3}
+
+    # Check that the route length is close to the optimal solution (10 + 25 + 30 + 15 = 80)
+    route_length1 = sum(distance_matrix1[edge[0]][edge[1]] for edge in tsp_route1)
+    assert abs(route_length1 - 80) <= 5  # Allow for small deviations due to heuristic optimization
+
+    # Example 2: Simple 3-node graph
+    n2 = 3
+    distance_matrix2 = [
+        [0, 5, 9],
+        [5, 0, 6],
+        [9, 6, 0]
+    ]
+
+    # Expected approximate solution: a valid TSP cycle (e.g., 0 -> 1 -> 2 -> 0)
+    tsp_route2 = tsp_ant_colony_optimization(np.array(distance_matrix2), n_ants=10, n_iterations=50)
+
+    # Check if the result is a valid cycle
+    tsp_nodes2 = set(edge[0] for edge in tsp_route2) | set(edge[1] for edge in tsp_route2)
+    assert tsp_nodes2 == {0, 1, 2}
+
+    # Check that the route length is close to the optimal solution (5 + 6 + 9 = 20)
+    route_length2 = sum(distance_matrix2[edge[0]][edge[1]] for edge in tsp_route2)
+    assert abs(route_length2 - 20) <= 2  # Allow for small deviations
